@@ -1,0 +1,46 @@
+{{>header}}
+{{>navbar}}
+
+{{#if error}}
+<div class="alert alert-danger" role="alert">
+ Please enter complete product data
+</div>
+{{/if}}
+
+<div class="container mt-5 p-4">
+  <form action="/add-hero" method="POST" enctype="multipart/form-data">
+    <div class="form-floating mb-3">
+      <input type="text" name="name" class="form-control" value="{{name}}" placeholder="Name">
+      <label for="floatingInput">Name</label>
+    </div>
+      <div id="preview-photo"></div>
+    <div class="form-floating mb-3">
+      <input type="file" name="photo" class="form-control" value="{{photo}}" placeholder="Photo" onchange="handleChange()" >
+      <label for="floatingInput" style="padding: 13px;">Photo</label>
+    </div>
+    <div class="form-floating mt-3" >
+      <select class="form-select p-3" name="type" >
+        <option selected>Choose Type...</option>
+        {{#if typeData}}
+          {{#each typeData}}
+            <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        {{/if}}
+      </select>
+    </div>
+    <div style="margin: 10px auto; display:flex; justify-content:center">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </form>
+</div>
+
+<script>
+
+  function handleChange(){
+    const previewElement = document.querySelector("#preview-photo");
+    const value = URL.createObjectURL(event.target.files[0]);
+    previewElement.innerHTML = `<img src="${value}" style="width: 100px; margin-left: 2 0px;" class="mb-3"/>`
+  }
+  
+</script>
+

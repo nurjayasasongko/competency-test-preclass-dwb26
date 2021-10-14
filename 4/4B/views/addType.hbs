@@ -1,0 +1,31 @@
+{{>header}}
+{{>navbar}}
+
+{{#if error}}
+<div class="alert alert-danger" role="alert">
+ Please enter complete product data
+</div>
+{{/if}}
+
+<div class="container mt-5 p-4">
+  <form action="/add-type" method="POST">
+    <div class="form-floating mb-3">
+      <input type="text" name="name" class="form-control" value="{{name}}" placeholder="Name">
+      <label for="floatingInput">Type Name</label>
+    </div>
+    <div style="margin: 10px auto; display:flex; justify-content:center">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </form>
+</div>
+
+<script>
+
+  function handleChange(){
+    const previewElement = document.querySelector("#preview-photo");
+    const value = URL.createObjectURL(event.target.files[0]);
+    previewElement.innerHTML = `<img src="${value}" style="width: 100px; margin-left: 2 0px;" class="mb-3"/>`
+  }
+  
+</script>
+

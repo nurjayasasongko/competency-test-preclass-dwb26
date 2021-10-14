@@ -1,0 +1,50 @@
+{{>header}}
+{{>navbar}}
+
+{{#if error}}
+  <div class="alert alert-danger" role="alert">
+   Please enter complete product data
+  </div>
+{{/if}}
+
+<div class="container mt-5 p-4">
+  <form action="/proses-edit/{{id}}" method="POST" enctype="multipart/form-data">
+    <div class="form-floating mb-3">
+      <input type="text" name="name" class="form-control" value="{{name}}">
+      <label for="floatingInput">Name</label>
+    </div>
+    <div id="preview-photo" class="text-start"></div>
+    <div class="form-floating mb-3">
+      <input type="hidden" value="{{photo}}" name="oldPhoto">
+      <input type="file" name="photo" class="form-control" aria-label="File browser example" value="{{photo}}" onchange="handleChange()">
+      <label for="floatingInput" style="padding: 13px;">Photo</label>
+    </div>
+    <div class="form-floating mt-3" >
+      <select class="form-select p-3" name="type" >
+        <option selected>Choose Type...</option>
+        {{#if typeData}}
+          {{#each typeData}}
+            <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        {{/if}}
+      </select>
+    </div>
+    <div style="margin: 10px auto; display:flex; justify-content:center">
+      <button type="submit" class="btn btn-success">Edit</button>
+    </div>
+        <input type="hidden" value="{{photo}}" id="url-thumbnail">
+  </form>
+</div>
+
+<script>
+    const previewElement = document.querySelector("#preview-photo");
+    const urlThumbnail= document.getElementById('url-thumbnail').value;
+    previewElement.innerHTML = `<img src="../uploads/${urlThumbnail}" style="width: 100px; margin-left: 2 0px;" class="mb-3"/>`;
+
+  function handleChange(){
+    const value = URL.createObjectURL(event.target.files[0]);
+    previewElement.innerHTML = `<img src="${value}" style="width: 100px; margin-left: 2 0px;" class="mb-3"/>`
+
+  }
+</script>
+
